@@ -1,0 +1,3 @@
+[build]
+# This project is intentionally built with at most two parallel jobs.
+jobs = 2

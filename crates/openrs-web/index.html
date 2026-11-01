@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenRS</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #1e1e1e;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #loading_text {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: #f0f0f0;
+            font-family: system-ui, sans-serif;
+            font-size: 1.25rem;
+            pointer-events: none;
+        }
+    </style>
+    <link data-trunk rel="rust">
+</head>
+<body>
+    <canvas id="the_canvas_id"></canvas>
+    <div id="loading_text">Loading OpenRS…</div>
+</body>
+</html>

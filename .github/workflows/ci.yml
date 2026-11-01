@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  native:
+    name: Native checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@1.95.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Linux desktop dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libx11-dev \
+            libxkbcommon-dev \
+            libwayland-dev \
+            libvulkan-dev \
+            libegl1 \
+            libgl1-mesa-dri \
+            xvfb \
+            x11-utils \
+            imagemagick
+
+      - name: Format
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: Test
+        run: cargo test --workspace
+
+      - name: Build desktop app
+        run: cargo build -p openrs-desktop
+
+      # Proves the native shell really opens a window and renders through wgpu.
+      # Mesa's llvmpipe software rasterizer is used; no GPU is required.
+      - name: Desktop smoke test
+        run: scripts/smoke-desktop.sh
+
+  wasm:
+    name: WebAssembly checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@1.95.0
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache Cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Trunk
+        uses: taiki-e/install-action@v2
+        with:
+          tool: trunk@0.22.1
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-pack@0.15.1
+
+      - name: Check web crate for wasm32
+        run: cargo check -p openrs-web --target wasm32-unknown-unknown
+
+      - name: Build web app
+        working-directory: crates/openrs-web
+        run: trunk build --release=true
+
+      - name: Set up ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+
+      - name: Run shared core test in Chromium
+        run: wasm-pack test --headless --chrome crates/openrs-core
+
+      # Proves the wasm bundle loads and `WebRunner` starts in a real browser.
+      # GitHub's ubuntu runners ship Google Chrome; the script auto-detects it.
+      - name: Web smoke test
+        env:
+          SKIP_BUILD: "1"
+        run: scripts/smoke-web.sh

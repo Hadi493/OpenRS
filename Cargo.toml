@@ -1,0 +1,42 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/openrs-core",
+    "crates/openrs-ui",
+    "crates/openrs-desktop",
+    "crates/openrs-web",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+[workspace.dependencies]
+# UI stack. Pin exact versions while the 0.37 API is new.
+egui = "=0.37.0"
+eframe = { version = "=0.37.0", default-features = false, features = [
+    "accesskit",
+    "default_fonts",
+    "wayland",
+    "web_screen_reader",
+    "wgpu",
+    "x11",
+] }
+egui_kittest = "=0.37.0"
+
+# Shared utilities and platform adapters.
+env_logger = "0.11"
+log = "0.4"
+console_error_panic_hook = "0.1"
+wasm-bindgen-futures = "0.4"
+web-sys = "0.3"
+wasm-bindgen-test = "0.3"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }

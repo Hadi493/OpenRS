@@ -1,0 +1,7 @@
+.LOCAL/
+/target/
+**/dist/
+**/*.diff.png
+**/*.new.png
+.DS_Store
+*.swp
