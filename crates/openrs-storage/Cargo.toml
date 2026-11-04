@@ -1,0 +1,41 @@
+[package]
+name = "openrs-storage"
+description = "OpenRS storage layer: repository contract, in-memory reference, and SQLite backend."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+# Catalog value types live in the shared core so the UI and storage cannot
+# drift apart.
+openrs-core = { path = "../openrs-core" }
+
+# Native SQLite. `bundled` compiles the SQLite C library into the binary so the
+# version is identical on every desktop and does not depend on system packages.
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+rusqlite = { version = "=0.41.1", features = ["bundled"] }
+
+# Browser SQLite. `sqlite-wasm-rs` is a raw FFI binding to the same C library,
+# compiled to WebAssembly; `sqlite-wasm-vfs` supplies the OPFS storage backend.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+sqlite-wasm-rs = { version = "=0.6.2", features = ["wasm-bindgen"] }
+sqlite-wasm-vfs = { version = "=0.3.0", features = ["sahpool"] }
+
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+# The workspace lints are restated instead of inherited because Cargo does not
+# allow a crate to inherit the workspace table and override one lint at the same
+# time.
+#
+# `unsafe_code` is downgraded from the workspace `forbid` to `deny` here on
+# purpose: this crate is the single documented exception (ADR 0002, condition 4)
+# because the browser driver must call the SQLite C API. `sqlite/wasm.rs` opts in
+# with `#![allow(unsafe_code)]`; every other module and crate still forbids it.
+[lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }

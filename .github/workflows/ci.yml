@@ -81,6 +81,12 @@ jobs:
       - name: Check web crate for wasm32
         run: cargo check -p openrs-web --target wasm32-unknown-unknown
 
+      - name: Check storage crate for wasm32
+        run: cargo check -p openrs-storage --target wasm32-unknown-unknown
+
+      - name: Clippy storage crate for wasm32
+        run: cargo clippy -p openrs-storage --target wasm32-unknown-unknown --all-targets -- -D warnings
+
       - name: Build web app
         working-directory: crates/openrs-web
         run: trunk build --release=true
@@ -90,6 +96,12 @@ jobs:
 
       - name: Run shared core test in Chromium
         run: wasm-pack test --headless --chrome crates/openrs-core
+
+      # Runs the storage guarantee suite in a browser plus the OPFS persistence
+      # tests in a dedicated worker. The wasm-pack test server sends the
+      # COOP/COEP headers the OPFS VFS needs.
+      - name: Run storage tests in Chromium
+        run: wasm-pack test --headless --chrome crates/openrs-storage
 
       # Proves the wasm bundle loads and `WebRunner` starts in a real browser.
       # GitHub's ubuntu runners ship Google Chrome; the script auto-detects it.

@@ -1,6 +1,9 @@
 .LOCAL/
 /target/
+**/target/
 **/dist/
+**/pkg/
+**/pkg-*/
 **/*.diff.png
 **/*.new.png
 .DS_Store

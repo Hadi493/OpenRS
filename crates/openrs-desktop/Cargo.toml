@@ -12,4 +12,6 @@ workspace = true
 [dependencies]
 eframe.workspace = true
 env_logger.workspace = true
+log.workspace = true
 openrs-ui = { path = "../openrs-ui" }
+openrs-storage = { path = "../openrs-storage" }

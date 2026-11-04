@@ -1,17 +1,15 @@
 [package]
 name = "openrs-ui"
-description = "Shared egui user interface for OpenRS."
-version.workspace = true
-edition.workspace = true
-rust-version.workspace = true
-publish.workspace = true
-
-[lints]
-workspace = true
+version = "0.1.0"
+edition = "2021"
 
 [dependencies]
-egui.workspace = true
-openrs-core = { path = "../openrs-core" }
+# The shared UI surface is egui/egui_kittest based across the desktop and web
+# targets so layout-independent behavior can be tested without another copy of
+# the widgets.
+egui = "0.32"
+openrs-core = { path = "../openrs-core", features = ["egui"] }
 
 [dev-dependencies]
-egui_kittest.workspace = true
+openrs-core = { path = "../openrs-core", features = ["egui"] }
+egui_kittest = "0.37"

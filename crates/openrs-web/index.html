@@ -33,6 +33,17 @@
         }
     </style>
     <link data-trunk rel="rust">
+    <!-- Dedicated worker that owns the SQLite database in OPFS. Trunk builds it
+         as a separate wasm binary and emits the loader shim the app starts by
+         URL. -->
+    <link
+        data-trunk
+        rel="rust"
+        href="../openrs-web-worker/Cargo.toml"
+        data-bin="openrs-web-worker"
+        data-type="worker"
+        data-loader-shim="true"
+    >
 </head>
 <body>
     <canvas id="the_canvas_id"></canvas>

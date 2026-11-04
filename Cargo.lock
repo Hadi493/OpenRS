@@ -3,6 +3,22 @@
 version = 4
 
 [[package]]
+name = "ab_glyph"
+version = "0.2.32"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "01c0457472c38ea5bd1c3b5ada5e368271cb550be7a4ca4a0b4634e9913f6cc2"
+dependencies = [
+ "ab_glyph_rasterizer",
+ "owned_ttf_parser",
+]
+
+[[package]]
+name = "ab_glyph_rasterizer"
+version = "0.1.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "366ffbaa4442f4684d91e2cd7c5ea7c4ed8add41959a31447066e279e432b618"
+
+[[package]]
 name = "accesskit"
 version = "0.25.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -821,12 +837,21 @@ checksum = "d8b14ccef22fc6f5a8f4d7d768562a182c04ce9a3b3157b91390b52ddfdf1a76"
 
 [[package]]
 name = "ecolor"
+version = "0.32.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "94bdf37f8d5bd9aa7f753573fdda9cf7343afa73dd28d7bfe9593bd9798fc07e"
+dependencies = [
+ "emath 0.32.3",
+]
+
+[[package]]
+name = "ecolor"
 version = "0.37.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "31bcbef0d4263a63eb32c4834e5d711613035ce1333468e107d928923e21e6e2"
 dependencies = [
  "bytemuck",
- "emath",
+ "emath 0.37.0",
 ]
 
 [[package]]
@@ -838,7 +863,7 @@ dependencies = [
  "ahash",
  "bytemuck",
  "document-features",
- "egui",
+ "egui 0.37.0",
  "egui-wgpu",
  "egui-winit",
  "egui_glow",
@@ -867,6 +892,22 @@ dependencies = [
 
 [[package]]
 name = "egui"
+version = "0.32.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5d5d0306cd61ca75e29682926d71f2390160247f135965242e904a636f51c0dc"
+dependencies = [
+ "ahash",
+ "bitflags 2.13.2",
+ "emath 0.32.3",
+ "epaint 0.32.3",
+ "nohash-hasher",
+ "profiling",
+ "smallvec",
+ "unicode-segmentation",
+]
+
+[[package]]
+name = "egui"
 version = "0.37.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bec9144f49b7a28b5f395d3147e325b4fe3e77ba686eac11d1bdf0a7da3f375f"
@@ -874,8 +915,8 @@ dependencies = [
  "accesskit",
  "ahash",
  "bitflags 2.13.2",
- "emath",
- "epaint",
+ "emath 0.37.0",
+ "epaint 0.37.0",
  "itertools",
  "log",
  "nohash-hasher",
@@ -894,8 +935,8 @@ dependencies = [
  "ahash",
  "bytemuck",
  "document-features",
- "egui",
- "epaint",
+ "egui 0.37.0",
+ "epaint 0.37.0",
  "log",
  "profiling",
  "thiserror 2.0.21",
@@ -915,7 +956,7 @@ dependencies = [
  "arboard",
  "block2 0.6.2",
  "bytemuck",
- "egui",
+ "egui 0.37.0",
  "log",
  "objc2 0.6.5",
  "objc2-app-kit 0.3.2",
@@ -935,7 +976,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9275ca5cc35a6b7c94e0e8cedf22542f66cb0cf45ed8ab2657c78ff49fec7268"
 dependencies = [
  "bytemuck",
- "egui",
+ "egui 0.37.0",
  "glow",
  "log",
  "profiling",
@@ -948,7 +989,7 @@ version = "0.37.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0979c2e37860fcf13a2bea77508607f067a9a6a84ba9bd47b5e298582fb59b86"
 dependencies = [
- "egui",
+ "egui 0.37.0",
  "kittest",
  "log",
  "serde",
@@ -960,6 +1001,12 @@ name = "either"
 version = "1.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e9c71c2167ca323c882b99918929403426e2373ea17242ff5653e0d5e1058be"
+
+[[package]]
+name = "emath"
+version = "0.32.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "45fd7bc25f769a3c198fe1cf183124bf4de3bd62ef7b4f1eaf6b08711a3af8db"
 
 [[package]]
 name = "emath"
@@ -1022,15 +1069,31 @@ dependencies = [
 
 [[package]]
 name = "epaint"
+version = "0.32.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "63adcea970b7a13094fe97a36ab9307c35a750f9e24bf00bb7ef3de573e0fddb"
+dependencies = [
+ "ab_glyph",
+ "ahash",
+ "ecolor 0.32.3",
+ "emath 0.32.3",
+ "epaint_default_fonts 0.32.3",
+ "nohash-hasher",
+ "parking_lot",
+ "profiling",
+]
+
+[[package]]
+name = "epaint"
 version = "0.37.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "97bac86ae3dde93fc3951e790951caea739ff39a6c89d909cdaf1d9278dbb1bd"
 dependencies = [
  "ahash",
  "bytemuck",
- "ecolor",
- "emath",
- "epaint_default_fonts",
+ "ecolor 0.37.0",
+ "emath 0.37.0",
+ "epaint_default_fonts 0.37.0",
  "font-types",
  "harfrust",
  "log",
@@ -1045,6 +1108,12 @@ dependencies = [
  "unicode-segmentation",
  "vello_cpu",
 ]
+
+[[package]]
+name = "epaint_default_fonts"
+version = "0.32.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1537accc50c9cab5a272c39300bdd0dd5dca210f6e5e8d70be048df9596e7ca2"
 
 [[package]]
 name = "epaint_default_fonts"
@@ -1102,6 +1171,18 @@ dependencies = [
  "event-listener",
  "pin-project-lite",
 ]
+
+[[package]]
+name = "fallible-iterator"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2acce4a10f12dc2fb14a218589d4f1f62ef011b2d0cc4b3cb1bba8e94da14649"
+
+[[package]]
+name = "fallible-streaming-iterator"
+version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7360491ce676a36bf9bb3c56c1aa791658183a54d2744120f27285738d90465a"
 
 [[package]]
 name = "fastrand"
@@ -1471,6 +1552,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "hashlink"
+version = "0.12.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a596f1b20ed2cc5ecac41a164aaebc7258057060f06c0cf7a2ba3991ee7990fb"
+dependencies = [
+ "hashbrown 0.17.1",
+]
+
+[[package]]
 name = "hermit-abi"
 version = "0.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1714,6 +1804,17 @@ dependencies = [
  "libc",
  "plain",
  "redox_syscall 0.9.5",
+]
+
+[[package]]
+name = "libsqlite3-sys"
+version = "0.39.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "14a5f01b87b92705d07b433c06f96cbc764637d81a0bffb5734ce17cf0f9a2b3"
+dependencies = [
+ "cc",
+ "pkg-config",
+ "vcpkg",
 ]
 
 [[package]]
@@ -2276,6 +2377,7 @@ checksum = "d6790f58c7ff633d8771f42965289203411a5e5c68388703c06e14f24770b41e"
 name = "openrs-core"
 version = "0.1.0"
 dependencies = [
+ "uuid",
  "wasm-bindgen-test",
 ]
 
@@ -2285,14 +2387,27 @@ version = "0.1.0"
 dependencies = [
  "eframe",
  "env_logger",
+ "log",
+ "openrs-storage",
  "openrs-ui",
+]
+
+[[package]]
+name = "openrs-storage"
+version = "0.1.0"
+dependencies = [
+ "openrs-core",
+ "rusqlite",
+ "sqlite-wasm-rs",
+ "sqlite-wasm-vfs",
+ "wasm-bindgen-test",
 ]
 
 [[package]]
 name = "openrs-ui"
 version = "0.1.0"
 dependencies = [
- "egui",
+ "egui 0.32.3",
  "egui_kittest",
  "openrs-core",
 ]
@@ -2304,8 +2419,23 @@ dependencies = [
  "console_error_panic_hook",
  "eframe",
  "log",
+ "openrs-core",
  "openrs-ui",
  "wasm-bindgen-futures",
+ "web-sys",
+]
+
+[[package]]
+name = "openrs-web-worker"
+version = "0.1.0"
+dependencies = [
+ "console_error_panic_hook",
+ "js-sys",
+ "openrs-core",
+ "openrs-storage",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "wasm-bindgen-test",
  "web-sys",
 ]
 
@@ -2346,6 +2476,15 @@ checksum = "7d8fae84b431384b68627d0f9b3b1245fcf9f46f6c0e3dc902e9dce64edd1967"
 dependencies = [
  "libc",
  "windows-sys 0.61.2",
+]
+
+[[package]]
+name = "owned_ttf_parser"
+version = "0.25.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36820e9051aca1014ddc75770aab4d68bc1e9e632f0f5627c4086bc216fb583b"
+dependencies = [
+ "ttf-parser",
 ]
 
 [[package]]
@@ -2726,6 +2865,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "19b30a45b0cd0bcca8037f3d0dc3421eaf95327a17cad11964fb8179b4fc4832"
 
 [[package]]
+name = "rsqlite-vfs"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "353b74f9810d5b085b6c42c9d86a5f0fdb795553235cdd48753b32e3809d18a7"
+dependencies = [
+ "thiserror 2.0.21",
+]
+
+[[package]]
+name = "rusqlite"
+version = "0.41.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "da9bba6f3506135e120a6586df05be18b48d18896600646a4bec8f993d91a594"
+dependencies = [
+ "bitflags 2.13.2",
+ "fallible-iterator",
+ "fallible-streaming-iterator",
+ "hashlink",
+ "libsqlite3-sys",
+ "smallvec",
+ "sqlite-wasm-rs",
+]
+
+[[package]]
 name = "rustc-hash"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2999,6 +3162,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "sqlite-wasm-rs"
+version = "0.6.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36bd8e29bf08189a005b2df1df99823aa0861cabe9044e5f31ed54ca292ee618"
+dependencies = [
+ "cc",
+ "js-sys",
+ "rsqlite-vfs",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "sqlite-wasm-vfs"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "11859fbd5ce417c37e9e8c1993b55b9dc21ea7dd6452ba9097115f06e54a7e4a"
+dependencies = [
+ "futures-util",
+ "js-sys",
+ "rsqlite-vfs",
+ "thiserror 2.0.21",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
 name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3197,6 +3386,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "ttf-parser"
+version = "0.25.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d2df906b07856748fa3f6e0ad0cbaa047052d4a7dd609e231c4f72cee8c36f31"
+
+[[package]]
 name = "type-map"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3258,10 +3453,17 @@ version = "1.29.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a0e2d11620c50695fe12bbbfde96b3477fe606e7284c22d505c12ce51214514"
 dependencies = [
+ "getrandom 0.4.3",
  "js-sys",
  "serde_core",
  "wasm-bindgen",
 ]
+
+[[package]]
+name = "vcpkg"
+version = "0.2.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "accd4ea62f7bb7a82fe23066fb0957d48ef677f6eeb8215f372f52e48bb32426"
 
 [[package]]
 name = "vello_common"

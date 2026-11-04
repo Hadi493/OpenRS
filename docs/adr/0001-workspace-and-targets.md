@@ -51,6 +51,27 @@ Build with at most two parallel Cargo jobs, as required by the project owner.
 - No database or persistence is introduced in Phase 0.1. That decision is
   deferred until a storage spike and project-owner approval.
 
+## Amendment (Phase 1, 2026-11-02): catalog value types live in core
+
+Phase 1 needed product and variant types in the UI. They already existed in
+`openrs-storage`, so keeping them there would have meant a second definition in
+`openrs-core` and a real risk of the two drifting apart.
+
+Decision: `Product`, `Variant`, and `MinorUnits` (plus `Catalog`, `StockStatus`,
+and `format_price`) are defined in `openrs-core::catalog`.
+`openrs-storage::model` re-exports them, so existing storage code and its tests
+are unchanged. Sale value types (`Sale`, `SaleLine`, `CheckoutRequest`,
+`RepoError`) stay in `openrs-storage` until a sale workflow needs them in the UI;
+moving them now would add no cohesion and would mix storage semantics into the
+domain layer before it is designed.
+
+Consequences:
+
+- `openrs-storage` now depends on `openrs-core` (both are platform-independent).
+- The UI can render a catalog without depending on storage.
+- When sales reach the UI, the sale types should be moved the same way rather
+  than re-exported in both directions.
+
 ## Open decisions
 
 - Database/storage engine and transaction strategy

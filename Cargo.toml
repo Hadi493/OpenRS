@@ -2,9 +2,11 @@
 resolver = "3"
 members = [
     "crates/openrs-core",
+    "crates/openrs-storage",
     "crates/openrs-ui",
     "crates/openrs-desktop",
     "crates/openrs-web",
+    "crates/openrs-web-worker",
 ]
 
 [workspace.package]
@@ -26,10 +28,16 @@ eframe = { version = "=0.37.0", default-features = false, features = [
 ] }
 egui_kittest = "=0.37.0"
 
+# Identifiers. UUIDv7 needs a source of randomness; `js` selects WebCrypto on
+# wasm32-unknown-unknown (ADR 0002) and is inert on native targets.
+uuid = { version = "1.29", features = ["v7", "js"] }
+
 # Shared utilities and platform adapters.
 env_logger = "0.11"
 log = "0.4"
 console_error_panic_hook = "0.1"
+js-sys = "0.3"
+wasm-bindgen = "0.2"
 wasm-bindgen-futures = "0.4"
 web-sys = "0.3"
 wasm-bindgen-test = "0.3"

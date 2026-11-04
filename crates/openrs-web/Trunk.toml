@@ -1,0 +1,24 @@
+# Trunk settings for the OpenRS web build.
+#
+# # Stable file names
+#
+# `filehash = false` keeps the generated file names stable. The storage worker is
+# started by URL from Rust (`./openrs-web-worker_loader.js`), and a content hash
+# in that name would make the URL unknowable from the compiled application.
+#
+# # Cross-origin isolation
+#
+# The OPFS `sahpool` VFS uses `SharedArrayBuffer`, which browsers only expose to
+# cross-origin isolated pages. These two headers are therefore required for the
+# worker to open the database; without them the page shows the startup error
+# state instead of a catalog. Any static host must send the same pair (see
+# README).
+
+[build]
+filehash = false
+
+[serve]
+addresses = ["127.0.0.1"]
+headers = { "Cross-Origin-Opener-Policy" = "same-origin", "Cross-Origin-Embedder-Policy" = "require-corp" }
+
+

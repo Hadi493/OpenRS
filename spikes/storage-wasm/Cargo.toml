@@ -1,0 +1,24 @@
+[package]
+name = "openrs-storage-wasm-spike"
+description = "Throwaway spike: does SQLite run in the browser for OpenRS?"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+# Detached from the product workspace. This crate is the only place in the
+# repository that is allowed to touch `unsafe`, because `sqlite-wasm-rs` is a
+# raw FFI binding to the SQLite C library.
+[workspace]
+
+[dependencies]
+sqlite-wasm-rs = { version = "=0.6.2", features = ["wasm-bindgen"] }
+wasm-bindgen = "=0.2.130"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = ["console"] }
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[lints.rust]
+unsafe_code = "warn"

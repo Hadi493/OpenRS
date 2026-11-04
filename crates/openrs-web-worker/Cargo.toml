@@ -1,0 +1,32 @@
+[package]
+name = "openrs-web-worker"
+description = "Dedicated browser worker that owns the OpenRS SQLite database in OPFS."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
+
+# The worker only exists in the browser. On native the crate compiles to a stub
+# binary, so `cargo test --workspace` and clippy still cover the workspace as a
+# whole without pulling in browser-only dependencies.
+[dependencies]
+openrs-core = { path = "../openrs-core" }
+openrs-storage = { path = "../openrs-storage" }
+
+[dev-dependencies]
+wasm-bindgen-test.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+console_error_panic_hook.workspace = true
+js-sys.workspace = true
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+web-sys = { workspace = true, features = [
+    "DedicatedWorkerGlobalScope",
+    "MessageEvent",
+    "WorkerGlobalScope",
+    "console",
+] }

@@ -1,0 +1,18 @@
+[package]
+name = "openrs-storage-spike"
+description = "Throwaway spike comparing in-memory and SQLite storage for OpenRS."
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+# Deliberately detached from the product workspace so spike dependencies
+# (rusqlite) can never leak into openrs-core or the shells.
+[workspace]
+
+[dependencies]
+rusqlite = { version = "=0.41.1", features = ["bundled"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"

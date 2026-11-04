@@ -9,5 +9,13 @@ publish.workspace = true
 [lints]
 workspace = true
 
+[dependencies]
+# Checkout idempotency keys are UUIDv7 (ADR 0002); see `checkout::new_checkout_id`.
+uuid.workspace = true
+
 [dev-dependencies]
 wasm-bindgen-test.workspace = true
+
+[features]
+default = []
+egui = []

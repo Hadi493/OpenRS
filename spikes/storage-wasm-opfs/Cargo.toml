@@ -1,0 +1,33 @@
+[package]
+name = "openrs-storage-opfs-spike"
+description = "Throwaway spike: does SQLite persist to OPFS in the browser for OpenRS?"
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+# Detached from the product workspace, same as the other two spikes. This crate
+# is allowed to touch `unsafe` because it calls the SQLite C API directly.
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+# `default = ["storage"]` lets the same crate be built with and without SQLite,
+# so the WebAssembly size cost of the storage layer can be measured as a delta.
+default = ["storage"]
+storage = ["dep:sqlite-wasm-rs", "dep:sqlite-wasm-vfs", "dep:wasm-bindgen-futures"]
+
+[dependencies]
+wasm-bindgen = "=0.2.130"
+# Required only by the exported async function that links the storage stack.
+wasm-bindgen-futures = { version = "0.4", optional = true }
+sqlite-wasm-rs = { version = "=0.6.2", features = ["wasm-bindgen"], optional = true }
+sqlite-wasm-vfs = { version = "=0.3.0", features = ["sahpool"], optional = true }
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[lints.rust]
+unsafe_code = "warn"
